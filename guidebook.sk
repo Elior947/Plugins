@@ -1,0 +1,13 @@
+on first join:
+    set {_book} to a written book
+    set name of {_book} to "Guide"
+    add "RedPrisonSMP is a survival server." to pages of {_book}
+    add "You can raid, fight, and team up!" to pages of {_book}
+    add "" to pages of {_book}
+    add "PvP is always on." to pages of {_book}
+    add "You’re never fully safe." to pages of {_book}
+    add "If you die, you’re sent to prison." to pages of {_book}
+    add "The sentence is 5 MINUTES!" to pages of {_book}
+    add "" to pages of {_book}
+    add "Good luck!" to pages of {_book}
+    give {_book} to player

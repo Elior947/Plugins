@@ -1,0 +1,7 @@
+on first join:
+    send "&6Welcome to &cRedButtonSMP&6!" to player
+    send "&7This isn't your typical vanilla server..." to player
+    send "&eRedButtonSMP &7is where chaos meets creativity. A survival world with no hand-holding, no rules against griefing, and no limits except the sky." to player
+    send "&7Start your own base, hunt for others, or build an empire with friends." to player
+    send "&aJoin epic events, form alliances, betray them later... it’s all part of the game." to player
+    send "&cOne world. Infinite stories. Welcome to your new obsession." to player

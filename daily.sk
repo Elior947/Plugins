@@ -1,0 +1,17 @@
+command /daily:
+    permission: dailyreward.use
+    permission message: &4You don't have access to this.
+    trigger:
+        if {daily.%uuid of player%} is set:
+            if difference between now and {daily.%uuid of player%} is less than 86400 seconds:
+                send "&cYou already claimed your daily reward. Come back later!"
+                stop
+        send "&2&lHere is your daily reward!"
+        give player 2 golden apples
+        set {daily.%uuid of player%} to now
+
+on join:
+    if {daily.%uuid of player%} is not set:
+        send "&aYou haven’t claimed your daily reward yet! Type /daily to get it now." to player
+    else if difference between now and {daily.%uuid of player%} is greater than or equal to 86400 seconds:
+        send "&aYour daily reward is ready! Use /daily to claim it." to player

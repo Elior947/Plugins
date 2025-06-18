@@ -1,0 +1,45 @@
+# When a player dies, mark them jailed and set remaining time
+on death:
+    if {jailed.%victim%} is not set:  # avoids resetting if already jailed
+        set {jailed.%victim%} to true
+        set {remaining.%victim%} to 300  # 5 minutes in seconds
+
+# When player respawns, if they’re jailed, teleport & show messages
+on respawn:
+    if {jailed.%player%} is set:
+        teleport player to location(-789, 55, -692, world("world"))  # center of jail
+        wait 1 tick
+        send title "&c&lYou Died!" to player
+        send subtitle "&7You are now jailed for &c5 minutes!" to player
+        play sound "entity.villager.no" with volume 1 and pitch 1 to player
+
+# Every second, decrement remaining time, enforce jail region, and actionbar countdown
+every 1 second:
+    loop all players:
+        if {jailed.%loop-player%} is set:
+            # Decrement remaining
+            subtract 1 from {remaining.%loop-player%}
+            # If still time left
+            if {remaining.%loop-player%} > 0:
+                # Send countdown in action bar (requires actionbar support addon)
+                send actionbar "&cJail Time Remaining: &f%{remaining.%loop-player%}%s" to loop-player
+                # Fallback subtitle if actionbar not supported:
+                # send subtitle "&cJail: &f%{remaining.%loop-player%}%s" to loop-player
+
+                # Enforce jail boundaries:
+                # Define min/max for x and z:
+                set {_x} to x-coordinate of loop-player
+                set {_z} to z-coordinate of loop-player
+                if {_x} < -797 or {_x} > -781 or {_z} < -696 or {_z} > -688:
+                    # teleport back to center
+                    teleport loop-player to location(-789, 55, -692, world("world"))
+                    send "&cYou can't leave the jail area!" to loop-player
+            else:
+                # Time up: release
+                delete {jailed.%loop-player%}
+                delete {remaining.%loop-player%}
+                send "&aYour jail time is over!" to loop-player
+                send title "&a&lYou're Free!" to loop-player
+                send subtitle "&7Stay out of trouble..." to loop-player
+                play sound "entity.player.levelup" with volume 1 and pitch 1 to loop-player
+				

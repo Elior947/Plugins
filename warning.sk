@@ -1,0 +1,3 @@
+on first join:
+    send "&7[!] WARNING: Dying will send you to jail for 5 minutes." to player
+    send title "Death = Jail!" with subtitle "Dying sends you to jail for 5 minutes." to player for 5 seconds

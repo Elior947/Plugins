@@ -1,0 +1,2 @@
+on join:
+    play sound "entity.experience_orb.pickup" to player
