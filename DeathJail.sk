@@ -12,6 +12,8 @@ on respawn:
         send title "&c&lYou Died!" to player
         send subtitle "&7You are now jailed for &c5 minutes!" to player
         play sound "entity.villager.no" with volume 1 and pitch 1 to player
+        set {_prefixOption} to "prefix"
+        set option {_prefixOption} of player to "&c[Jailed] &r"
 
 # Every second, decrement remaining time, enforce jail region, and actionbar countdown
 every 1 second:
@@ -38,8 +40,17 @@ every 1 second:
                 # Time up: release
                 delete {jailed.%loop-player%}
                 delete {remaining.%loop-player%}
+                set {_prefixOption} to "prefix"
+                clear option {_prefixOption} of loop-player
                 send "&aYour jail time is over!" to loop-player
                 send title "&a&lYou're Free!" to loop-player
                 send subtitle "&7Stay out of trouble..." to loop-player
                 play sound "entity.player.levelup" with volume 1 and pitch 1 to loop-player
 				
+
+on command:
+    if {jailed.%player%} is set:
+        set {_command} to command label
+        if {_command} is "spawn" or "tpa" or "tpaccept" or "tpahere" or "home" or "warp" or "back":
+            cancel event
+            send "&cYou cannot use this command while jailed." to player
